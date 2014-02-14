@@ -12,11 +12,16 @@ var htmlparser2 = require('htmlparser2');
 
 /**
  * @param {string} html
+ * @param {object} options (optional)
  * @param {function} callback (optional)
  * @return {array} JsonML
  */
-module.exports = function(html, callback)
+module.exports = function(html, options, callback)
 {
+	if(typeof options === 'function'){
+		callback = options;
+		options = {};
+	}
 	var errors = null;
 	var jsonMl = null;
 	if(typeof html === 'string'){
@@ -36,8 +41,10 @@ module.exports = function(html, callback)
 							break;
 						}
 					}
-					if(attr)
+					if(found || options.requreAttributes)
 						current.push(attribs);
+				}else if(options.requreAttributes){
+					current.push({});
 				}
 				parent.push(current);
 			},

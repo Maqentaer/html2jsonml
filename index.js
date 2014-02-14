@@ -60,6 +60,12 @@ module.exports = function(html, callback)
 		});
 		parser.write(html);
 		parser.end();
+
+		if (jsonMl.length === 1)
+			jsonMl = jsonMl[0];
+		else if (jsonMl.length > 1)
+			jsonMl.unshift('');
+
 		if(html.length && !jsonMl.length)
 			jsonMl = null;
 	}

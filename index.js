@@ -25,7 +25,6 @@ module.exports = function(html, callback)
 		var parents = [];
 		var parser = new htmlparser2.Parser({
 			onopentag: function(name, attribs){
-				console.log(name);
 				var parent = current;
 				parents.push(parent);
 				current = [name];

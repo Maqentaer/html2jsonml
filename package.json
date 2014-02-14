@@ -1,0 +1,40 @@
+{
+  "name": "html2jsonml",
+  "version": "0.0.1",
+  "description": "Convert HTML to JSONML",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "test": "node ./test/index.js",
+    "watch": "nodemon -w ./index.js index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Maqentaer/html2jsonml"
+  },
+  "keywords": [
+    "jsonml",
+    "dom2jsonml",
+    "html2jsonml"
+  ],
+  "author": "Roman Glebsky <maqentaer@gmail.com>",
+  "contributors": [
+    {
+      "name": "Maqentaer"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/Maqentaer/html2jsonml/raw/master/LICENSE"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/Maqentaer/html2jsonml/issues",
+    "email": "maqentaer@gmail.com"
+  },
+  "homepage": "https://github.com/Maqentaer/html2jsonml",
+  "dependencies": {
+    "htmlparser2": "~3.4.0"
+  }
+}

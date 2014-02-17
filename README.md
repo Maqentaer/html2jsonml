@@ -8,7 +8,7 @@ var jsonMl = html2jsonml( <string> html [, <object> options ] [, <func> callback
 ```
 
 ##Options
-for supporting not JSONML standards and others:
+for supporting not JSONML standards and others parser options:
 ```javascript
 var options = {
   // Add attributes object in any case (false by default):

@@ -18,10 +18,11 @@ var htmlparser2 = require('htmlparser2');
  */
 module.exports = function(html, options, callback)
 {
-	if(typeof options === 'function' || typeof options === 'undefined'){
+	if(typeof options === 'function'){
 		callback = options;
 		options = {};
 	}
+	options = options || {};
 	var errors = null;
 	var jsonMl = null;
 	if(typeof html === 'string'){

@@ -18,7 +18,7 @@ var htmlparser2 = require('htmlparser2');
  */
 module.exports = function(html, options, callback)
 {
-	if(typeof options === 'function'){
+	if(typeof options === 'function' || typeof options === 'undefined'){
 		callback = options;
 		options = {};
 	}
@@ -27,7 +27,9 @@ module.exports = function(html, options, callback)
 	if(typeof html === 'string'){
 		jsonMl = [];
 		var current = jsonMl;
+		var currentChildren = null;
 		var parents = [];
+		var parentsChildren = [];
 		var parser = new htmlparser2.Parser({
 			onopentag: function(name, attribs){
 				var parent = current;
@@ -41,46 +43,85 @@ module.exports = function(html, options, callback)
 							break;
 						}
 					}
-					if(found || options.requreAttributes)
+					if(found || options.requreAttributes){
 						current.push(attribs);
+					}
 				}else if(options.requreAttributes){
 					current.push({});
 				}
-				parent.push(current);
+				if(options.childrenInArray){
+					if(!currentChildren){
+						currentChildren = [current];
+						parent.push(currentChildren);
+					}else{
+						currentChildren.push(current);
+					}
+					parentsChildren.push(currentChildren);
+					currentChildren = null;
+				}else{
+					parent.push(current);
+				}
 			},
 			ontext: function(text){
-				current.push(text);
+				if(options.childrenInArray){
+					if(!currentChildren){
+						currentChildren = [text];
+						current.push(currentChildren);
+					}else{
+						currentChildren.push(text);
+					}
+				}else{
+					current.push(text);
+				}
 			},
 			onclosetag: function(name){
 				current = parents.pop();
+				if(options.childrenInArray){
+					currentChildren = parentsChildren.pop();
+				}
 			},
 			onprocessinginstruction: function(name, value){
-				if('!doctype' === name)
-					current.push(['!', value.substr(1)]);
+				if(!options.noProcessingInstructions)
+					current.push([value.substr(0,1), value.substr(1)]);
 			},
 			onerror: function(err){
-				if(null !== errors)
+				if(null !== errors){
 					errors = [errors, err];
-				else
+				}else{
 					errors = err;
+				}
 			}
-		});
+		}, options);
 		parser.write(html);
 		parser.end();
 
-		if (jsonMl.length === 1)
+		if(options.childrenInArray){
 			jsonMl = jsonMl[0];
-		else if (jsonMl.length > 1)
-			jsonMl.unshift('');
+		}
 
-		if(html.length && !jsonMl.length)
+		if (jsonMl.length === 1){
+			jsonMl = jsonMl[0];
+		}
+		else if (jsonMl.length > 1){
+			if(options.childrenInArray){
+				jsonMl = [jsonMl];
+			}
+			if(options.requreAttributes){
+				jsonMl.unshift({});
+			}
+			jsonMl.unshift('');
+		}
+
+		if(html.length && !jsonMl.length){
 			jsonMl = null;
+		}
 	}
 	if(callback){
-		if(null === jsonMl || null !== errors)
+		if(null === jsonMl || null !== errors){
 			callback(null === errors ? new Error("Invalid HTML") : errors);
-		else
+		}else{
 			callback(null, jsonMl)
+		}
 	}
 	return jsonMl;
 }

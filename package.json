@@ -1,6 +1,6 @@
 {
   "name": "html2jsonml",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Convert HTML to JSONML",
   "main": "index.js",
   "scripts": {

@@ -4,7 +4,26 @@ Convert HTML to JSONML
 
 ##Usage
 ```javascript
-var jsonMl = html2jsonml( <string> html [, <func> callback(err, <array> jsonMl)]);
+var jsonMl = html2jsonml( <string> html [, <object> options ] [, <func> callback(err, <array> jsonMl)]);
+```
+
+##Options
+for supporting not JSONML standards and others:
+```javascript
+var options = {
+  // Add attributes object in any case (false by default):
+  requreAttributes: false,
+  // Children in separate array (false by default):
+  childrenInArray: false,
+  // Don't generate processing instructions (false by default):
+  noProcessingInstructions: false,
+  // HtmlParser2 (false by default):
+  lowerCaseAttributeNames: false,
+  // HtmlParser2 (false by default):
+  lowerCaseTags: false,
+  // HtmlParser2:Tokenizer (false by default):
+  decodeEntities: false
+}
 ```
 
 ##Examples

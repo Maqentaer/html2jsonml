@@ -12,7 +12,7 @@ for supporting not JSONML standards and others:
 ```javascript
 var options = {
   // Add attributes object in any case (false by default):
-  requreAttributes: false,
+  requireAttributes: false,
   // Children in separate array (false by default):
   childrenInArray: false,
   // Don't generate processing instructions (false by default):

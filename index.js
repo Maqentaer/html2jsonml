@@ -43,10 +43,10 @@ module.exports = function(html, options, callback)
 							break;
 						}
 					}
-					if(found || options.requreAttributes){
+					if(found || options.requireAttributes){
 						current.push(attribs);
 					}
-				}else if(options.requreAttributes){
+				}else if(options.requireAttributes){
 					current.push({});
 				}
 				if(options.childrenInArray){
@@ -106,7 +106,7 @@ module.exports = function(html, options, callback)
 			if(options.childrenInArray){
 				jsonMl = [jsonMl];
 			}
-			if(options.requreAttributes){
+			if(options.requireAttributes){
 				jsonMl.unshift({});
 			}
 			jsonMl.unshift('');
